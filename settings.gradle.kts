@@ -17,7 +17,17 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+
+    versionCatalogs {
+        create("moengage") {
+            from("com.moengage:android-dependency-catalog:4.5.0")
+        }
+    }
 }
+
+
+
+
 
 rootProject.name = "SampleApp"
 include(":app")

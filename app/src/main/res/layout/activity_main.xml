@@ -50,14 +50,44 @@
         android:layout_height="match_parent"/>
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/sort"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_alignParentBottom="true"
-        android:src="@drawable/ic_sort"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/event1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5sp"
+            android:text="EVENT 1"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/event2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5sp"
+            android:text="EVENT 2"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SORT"
+            android:layout_weight="1"/>
+
+
+
+    </LinearLayout>
+
+
 
 </RelativeLayout>

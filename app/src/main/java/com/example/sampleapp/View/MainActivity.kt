@@ -6,16 +6,23 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.Models.Article
 import com.example.sampleapp.Network.FetchData
 import com.example.sampleapp.R
+import com.example.sampleapp.databinding.ActivityMainBinding
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.FirebaseApp
+import com.moengage.core.MoECoreHelper
 import com.moengage.core.Properties
 import com.moengage.core.analytics.MoEAnalyticsHelper
 import com.moengage.core.model.AppStatus
@@ -30,7 +37,6 @@ import java.util.Date
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var newsRv: RecyclerView
     private lateinit var adapter: NewsAdapter
     private lateinit var sortitems: MutableList<Article>
     private var isSorted = false
@@ -40,25 +46,21 @@ class MainActivity : AppCompatActivity() {
     val format = SimpleDateFormat("yyyy-MM-dd")
     var formattedDate = ""
 
+    private lateinit var binding: ActivityMainBinding
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
 
-        FirebaseApp.initializeApp(this)
+        setSupportActionBar(binding.appBar)
 
         formattedDate = format.format(currentDate)
 
-        val sort = findViewById<Button>(R.id.sort)
-        val event1 = findViewById<Button>(R.id.event1)
-        val event2 = findViewById<Button>(R.id.event2)
-
-        newsRv = findViewById(R.id.news_Rv)
-        newsRv.layoutManager = LinearLayoutManager(this)
+        binding.newsRv.layoutManager = LinearLayoutManager(this)
         adapter = NewsAdapter()
-        newsRv.adapter = adapter
-
+        binding.newsRv.adapter = adapter
 
         try {
             if (checkForInternet(this)) {
@@ -71,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
                 api_call()
 
-                sort.setOnClickListener {
+                binding.sort.setOnClickListener {
 
                     sort_track()
 
@@ -88,16 +90,19 @@ class MainActivity : AppCompatActivity() {
             Log.i("error", e.toString())
         }
 
-        event1.setOnClickListener {
+        binding.event1.setOnClickListener {
 
             event_track()
         }
 
-        event2.setOnClickListener {
+        binding.event2.setOnClickListener {
             event2_track()
         }
 
+
     }
+
+
 
     private fun event2_track() {
         val event2_track = Properties()
@@ -193,6 +198,34 @@ class MainActivity : AppCompatActivity() {
             api_call()
         } else {
             Toast.makeText(this, "No Internet Connection Found !", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_item -> {
+
+                true
+            }
+            R.id.logout_item -> {
+
+                MoECoreHelper.logoutUser(this)
+
+                finish()
+
+                true
+            }
+            R.id.settings_item -> {
+
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

@@ -39,8 +39,8 @@ class CustomPushMessageListener : PushMessageListener() {
     override fun customizeNotificationBuilder(
         notificationBuilder: NotificationCompat.Builder,
         context: Context,
-        notificationPayload: NotificationPayload
-    ) {
+        notificationPayload: NotificationPayload)
+    {
         super.customizeNotificationBuilder(notificationBuilder, context, notificationPayload)
 
         // customise the notification builder
@@ -72,8 +72,39 @@ class CustomPushMessageListener : PushMessageListener() {
 
 
     override fun onNotificationClick(activity: Activity, payload: Bundle): Boolean {
-//        return super.onNotificationClick(activity, payload)
-        return false
+
+        //TASK 3 BASED ON THE KV PAIR CONDITION REDIRECT THE CLICKS
+
+        val conditioncheck = payload.getString("gcm_title")
+
+        conditioncheck?.let {
+
+            var intent = Intent()
+
+            if (conditioncheck.equals("test")) {
+                intent = Intent(activity, MainActivity::class.java)
+
+            } else {
+                intent = Intent(activity, SignUpActivity::class.java)
+            }
+
+
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.putExtra("payload", payload)
+            val pendingIntent = PendingIntent.getActivity(
+                activity, 0 /* Request code */, intent,
+                PendingIntent.FLAG_IMMUTABLE
+            )
+
+            pendingIntent.send()
+
+
+
+        }
+
+
+
+        return true
     }
 
     override fun onNotificationCleared(context: Context, payload: Bundle) {

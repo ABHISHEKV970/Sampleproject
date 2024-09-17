@@ -56,6 +56,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                             MoEPushHelper.getInstance()
                                 .logNotificationReceived(this, remoteMessage.data)
 
+
+
+                            //TASK 3 BASED ON THE KV PAIR CONDITION REDIRECT THE CLICKS
+
                             val conditionclick = remoteMessage.data["gcm_title"] == "testapp"
 
                             var intent = Intent()

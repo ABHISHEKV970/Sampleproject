@@ -7,9 +7,11 @@ import android.content.Intent
 class CustomActionBroadcastReceiver : BroadcastReceiver() {
 
 
+    // TASK - 4 Implement CUSTOM ACTION Button Redirection
+
     override fun onReceive(context: Context, intent: Intent) {
         // Redirect to a specific activity
-        var type = intent.getIntExtra("type", 1)
+        val type = intent.getIntExtra("type", 1)
 
         if (type==1)
         {

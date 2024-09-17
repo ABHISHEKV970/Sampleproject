@@ -2,22 +2,16 @@ package com.example.sampleapp.View
 
 import android.app.Activity
 import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.sampleapp.R
-import com.google.firebase.messaging.FirebaseMessagingService.NOTIFICATION_SERVICE
-import com.moengage.core.internal.utils.getApplicationContext
 import com.moengage.pushbase.model.NotificationPayload
 import com.moengage.pushbase.push.PushMessageListener
-import kotlin.random.Random
 
 class CustomPushMessageListener : PushMessageListener() {
 
@@ -115,33 +109,28 @@ class CustomPushMessageListener : PushMessageListener() {
     override fun handleCustomAction(context: Context, payload: String) {
         super.handleCustomAction(context, payload)
 
-//        println(payload)
-//
-//        val conditionclick = payload == "test"
-//
-//
-//        if(conditionclick)
-//        {
-//
-//
-//            val intent = Intent(context, CustomActionBroadcastReceiver::class.java)
-//            intent.putExtra("type",1)
-//            context.sendBroadcast(intent)
-//
-//        }
-//        else
-//        {
-//
-//            val intent = Intent(context, CustomActionBroadcastReceiver::class.java)
-//            intent.putExtra("type",2)
-//            context.sendBroadcast(intent)
-//
-//        }
+       // TASK - 4 Implement CUSTOM ACTION Button Redirection
 
+        println(payload)
 
+        val conditionclick = payload == "test"
 
+        if(conditionclick)
+        {
 
+            val intent = Intent(context, CustomActionBroadcastReceiver::class.java)
+            intent.putExtra("type",1)
+            context.sendBroadcast(intent)
 
+        }
+        else
+        {
+
+            val intent = Intent(context, CustomActionBroadcastReceiver::class.java)
+            intent.putExtra("type",2)
+            context.sendBroadcast(intent)
+
+        }
 
     }
 

@@ -16,16 +16,15 @@ import com.moengage.pushbase.push.PushMessageListener
 class CustomPushMessageListener : PushMessageListener() {
 
 
-
     override fun isNotificationRequired(context: Context, payload: Bundle): Boolean {
 
         //TASK 2 USING SHARED PREFERENCE
 
         val preferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
-        val storedValue = preferences.getBoolean("notificationstatus",true)
+        val storedValue = preferences.getBoolean("notificationstatus", true)
 
-        Log.i("passingvalue",storedValue.toString())
+        Log.i("passingvalue", storedValue.toString())
 
         return preferences.getBoolean("notificationstatus", true)
     }
@@ -33,8 +32,8 @@ class CustomPushMessageListener : PushMessageListener() {
     override fun customizeNotificationBuilder(
         notificationBuilder: NotificationCompat.Builder,
         context: Context,
-        notificationPayload: NotificationPayload)
-    {
+        notificationPayload: NotificationPayload
+    ) {
         super.customizeNotificationBuilder(notificationBuilder, context, notificationPayload)
 
         // customise the notification builder
@@ -77,11 +76,9 @@ class CustomPushMessageListener : PushMessageListener() {
 
             if (conditioncheck.equals("test")) {
                 intent = Intent(activity, MainActivity::class.java)
-
             } else {
                 intent = Intent(activity, SignUpActivity::class.java)
             }
-
 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             intent.putExtra("payload", payload)
@@ -91,7 +88,6 @@ class CustomPushMessageListener : PushMessageListener() {
             )
 
             pendingIntent.send()
-
 
 
         }
@@ -109,25 +105,22 @@ class CustomPushMessageListener : PushMessageListener() {
     override fun handleCustomAction(context: Context, payload: String) {
         super.handleCustomAction(context, payload)
 
-       // TASK - 4 Implement CUSTOM ACTION Button Redirection
+        // TASK - 4 Implement CUSTOM ACTION Button Redirection
 
         println(payload)
 
         val conditionclick = payload == "test"
 
-        if(conditionclick)
-        {
+        if (conditionclick) {
 
             val intent = Intent(context, CustomActionBroadcastReceiver::class.java)
-            intent.putExtra("type",1)
+            intent.putExtra("type", 1)
             context.sendBroadcast(intent)
 
-        }
-        else
-        {
+        } else {
 
             val intent = Intent(context, CustomActionBroadcastReceiver::class.java)
-            intent.putExtra("type",2)
+            intent.putExtra("type", 2)
             context.sendBroadcast(intent)
 
         }

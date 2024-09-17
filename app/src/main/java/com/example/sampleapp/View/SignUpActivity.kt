@@ -34,6 +34,8 @@ class SignUpActivity : AppCompatActivity() {
 
 
         try {
+            //TASK 2 USING SHARED PREFERENCE
+
             val storedValue = sharedPref.getBoolean("notificationstatus",true)
 
             if(storedValue)
@@ -126,6 +128,8 @@ class SignUpActivity : AppCompatActivity() {
         }
 
 
+
+        //TASK 2 USING SHARED PREFERENCE
 
         binding.switchButtonNotify.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked)

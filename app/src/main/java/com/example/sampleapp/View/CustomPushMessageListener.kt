@@ -23,8 +23,10 @@ class CustomPushMessageListener : PushMessageListener() {
 
 
 
-
     override fun isNotificationRequired(context: Context, payload: Bundle): Boolean {
+
+        //TASK 2 USING SHARED PREFERENCE
+
         val preferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
         val storedValue = preferences.getBoolean("notificationstatus",true)
@@ -40,9 +42,6 @@ class CustomPushMessageListener : PushMessageListener() {
         notificationPayload: NotificationPayload
     ) {
         super.customizeNotificationBuilder(notificationBuilder, context, notificationPayload)
-//        val notificationIntent = Intent(context, MainActivity::class.java)
-//        val pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-//        notificationBuilder.setContentIntent(pendingIntent)
 
         // customise the notification builder
         notificationBuilder.setSmallIcon(R.drawable.ic_large_headphone)
@@ -85,60 +84,28 @@ class CustomPushMessageListener : PushMessageListener() {
     override fun handleCustomAction(context: Context, payload: String) {
         super.handleCustomAction(context, payload)
 
-        println(payload)
-
-        val conditionclick = payload == "test"
-
-
-        if(conditionclick)
-        {
-
-
-            val intent = Intent(context, CustomActionBroadcastReceiver::class.java)
-            intent.putExtra("type",1)
-            context.sendBroadcast(intent)
-
-        }
-        else
-        {
-
-            val intent = Intent(context, CustomActionBroadcastReceiver::class.java)
-            intent.putExtra("type",2)
-            context.sendBroadcast(intent)
-
-        }
-
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//        val pendingIntent = PendingIntent.getActivity(
-//            context, 0 /* Request code */, intent,
-//            PendingIntent.FLAG_IMMUTABLE
-//        )
+//        println(payload)
 //
-//            // Customize the notification
-//        val notificationBuilder = NotificationCompat.Builder(context, Channel_id)
-//                .setSmallIcon(R.drawable.ic_large_headphone)
-//                .setContentTitle("App Notification")
-//                .setContentText("Just a custom notification")
-//                .setContentIntent(pendingIntent)
-//                .setPriority(NotificationCompat.PRIORITY_HIGH)
-//                .setAutoCancel(false)
-//            // Display the notification
-//            try {
-//                val notificationManager =
-//                    context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+//        val conditionclick = payload == "test"
 //
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                    val channel = NotificationChannel(
-//                        Channel_id, "Some sample title !",
-//                        NotificationManager.IMPORTANCE_DEFAULT
-//                    )
-//                    notificationManager.createNotificationChannel(channel)
-//                }
-//                notificationManager.notify(Notification_id, notificationBuilder.build())
 //
-//            } catch (e: Exception) {
-//                Log.i("error", e.toString())
-//            }
+//        if(conditionclick)
+//        {
+//
+//
+//            val intent = Intent(context, CustomActionBroadcastReceiver::class.java)
+//            intent.putExtra("type",1)
+//            context.sendBroadcast(intent)
+//
+//        }
+//        else
+//        {
+//
+//            val intent = Intent(context, CustomActionBroadcastReceiver::class.java)
+//            intent.putExtra("type",2)
+//            context.sendBroadcast(intent)
+//
+//        }
 
 
 

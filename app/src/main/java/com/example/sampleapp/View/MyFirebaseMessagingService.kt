@@ -29,13 +29,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             if (MoEPushHelper.getInstance().isFromMoEngagePlatform(remoteMessage.data)) {
                 println(remoteMessage.data)
 
-//                val sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-//
-//                val storedValue = sharedPref.getBoolean("notificationstatus", true)
+                //TASK 2 USING SHARED PREFERENCE
+                val sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
-//                if (storedValue)
-//                {
+                val storedValue = sharedPref.getBoolean("notificationstatus", true)
 
+                if (storedValue)
+                {
+
+                    //TASK 1 USING BASIC KV PAIR CONDITION CHECKING
                     val conditionMet = remoteMessage.data["company_name"] == "moengage"
 
                     if (conditionMet) {
@@ -118,12 +120,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     println("Notification is OFF !")
                 }
 
+            }
 
- //           }
-
-//        else {
-//                // your app's business logic to show notification
-//            }
+        else {
+                // your app's business logic to show notification
+            }
         }
 
         remoteMessage.notification?.let {

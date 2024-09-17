@@ -34,28 +34,25 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
                 val storedValue = sharedPref.getBoolean("notificationstatus", true)
 
-                if (storedValue)
-                {
-
-                    //TASK 1 USING BASIC KV PAIR CONDITION CHECKING
+                if (storedValue) {
+                    //TASK 1 USING THE BASIC KV PAIR CONDITION CHECKING
                     val conditionMet = remoteMessage.data["company_name"] == "moengage"
 
                     if (conditionMet) {
                         //MOENGAGE SDK TRIGGER NOTIFICATION
-                        MoEFireBaseHelper.getInstance().passPushPayload(applicationContext, remoteMessage.data)
-                    }
-                    else {
+                        MoEFireBaseHelper.getInstance()
+                            .passPushPayload(applicationContext, remoteMessage.data)
+                    } else {
                         //APP TRIGGER NOTIFICATION
                         if (MoEPushHelper.getInstance()
                                 .isFromMoEngagePlatform(remoteMessage.data)
                         ) {
                             val Notification_id = Random.nextInt(1000)
 
-                            var Channel_Id = "moengage_channel"
+                            val Channel_Id = "moengage_channel"
 
                             MoEPushHelper.getInstance()
                                 .logNotificationReceived(this, remoteMessage.data)
-
 
 
                             //TASK 3 BASED ON THE KV PAIR CONDITION REDIRECT THE CLICKS
@@ -78,7 +75,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                                 bundle.putString(key, value)
                             }
 
-                            bundle.putString("company","moengage")
+                            bundle.putString("company", "moengage")
 
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                             intent.putExtra("payload", bundle)
@@ -124,9 +121,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     println("Notification is OFF !")
                 }
 
-            }
-
-        else {
+            } else {
                 // your app's business logic to show notification
             }
         }

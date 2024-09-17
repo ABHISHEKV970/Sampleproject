@@ -17,10 +17,15 @@ import com.moengage.core.config.NotificationConfig
 import com.moengage.core.config.TrackingOptOutConfig
 import com.moengage.firebase.MoEFireBaseHelper
 import com.moengage.pushbase.MoEPushHelper
+import com.moengage.pushbase.listener.TokenAvailableListener
+import com.moengage.pushbase.model.Token
 
 class SampleApplication : Application() {
 
-    override fun onCreate() {
+
+    override fun onCreate()
+    {
+
         super.onCreate()
 
 //Firebase initialization
@@ -28,6 +33,7 @@ class SampleApplication : Application() {
 
         //fetch FCM Token
         fetchFcm_Token()
+
 
         //OptOut the activity
         val trackingOptOut = mutableSetOf<Class<*>>()
@@ -39,9 +45,8 @@ class SampleApplication : Application() {
         )
 
 
-
         val moEngage = MoEngage.Builder(this, "N479J9GSMH8OE6E4IPE5G7NV", DataCenter.DATA_CENTER_1)
-            .configureFcm(FcmConfig(true))
+            .configureFcm(FcmConfig(false))
             .configureNotificationMetaData(NotificationConfig(R.drawable.ic_notify_small, R.drawable.ic_large_headphone))
             .configureLogs(LogConfig(LogLevel.VERBOSE, true))
             .configureTrackingOptOut(trackingOptOutConfig)
@@ -49,6 +54,18 @@ class SampleApplication : Application() {
 
         MoEngage.initialiseDefaultInstance(moEngage)
 
+        //call back for fetching the token from moengage sdk
+
+        MoEFireBaseHelper.getInstance().addTokenListener(object : TokenAvailableListener {
+            override fun onTokenAvailable(token: Token) {
+
+                //will receive the token
+            }
+
+        })
+
+        //custom push messages
+        MoEPushHelper.getInstance().registerMessageListener(CustomPushMessageListener())
 
 
         //Requesting permission on android version 13 and above devices

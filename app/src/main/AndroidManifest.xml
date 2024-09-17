@@ -5,6 +5,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+<!--    location permissions-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
     <application
         android:name=".View.SampleApplication"
         android:allowBackup="true"
@@ -18,12 +22,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
-        //RICH LANDING
-        <activity
-            android:name="com.moe.pushlibrary.activities.MoEActivity"
-            android:label="ARTICLE DETAILS"
-            android:parentActivityName=".View.MainActivity" >
-        </activity>
+
+        <receiver android:name=".View.CustomActionBroadcastReceiver" />
+
 
         <activity
             android:name=".View.SignUpActivity"
@@ -51,7 +52,24 @@
             android:exported="false" />
         <activity
             android:name=".View.MainActivity"
-            android:exported="false"></activity>
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="www.moengage.com"
+                    android:scheme="https" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="www.moengage.com"
+                    android:scheme="http" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

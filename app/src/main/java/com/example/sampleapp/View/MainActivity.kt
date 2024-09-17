@@ -3,30 +3,25 @@ package com.example.sampleapp.View
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.os.Build
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.sampleapp.Models.Article
 import com.example.sampleapp.Network.FetchData
 import com.example.sampleapp.R
 import com.example.sampleapp.databinding.ActivityMainBinding
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.FirebaseApp
 import com.moengage.core.MoECoreHelper
 import com.moengage.core.Properties
 import com.moengage.core.analytics.MoEAnalyticsHelper
 import com.moengage.core.model.AppStatus
 import com.moengage.core.model.GeoLocation
+import com.moengage.pushbase.MoEPushHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -34,6 +29,7 @@ import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import java.text.SimpleDateFormat
 import java.util.Date
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,7 +45,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
@@ -57,6 +52,26 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.appBar)
 
         formattedDate = format.format(currentDate)
+
+
+        val bundle = Bundle()
+
+        bundle?.let {
+
+                var value = bundle.getBundle("company")
+
+                value?.let {
+
+                    if (value.equals("moengage")) {
+                        //For handling custom notification click
+                        MoEPushHelper.getInstance().logNotificationClick(applicationContext, intent)
+                    }
+
+                }
+                }
+
+
+
 
         binding.newsRv.layoutManager = LinearLayoutManager(this)
         adapter = NewsAdapter()
@@ -82,7 +97,6 @@ class MainActivity : AppCompatActivity() {
                 }
 
             } else {
-
 
                 Toast.makeText(this, "No Internet Connection Found !", Toast.LENGTH_SHORT).show()
             }

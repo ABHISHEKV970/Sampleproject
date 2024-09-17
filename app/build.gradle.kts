@@ -72,6 +72,8 @@ dependencies {
 
     //moengage
     implementation(moengage.core)
+//    implementation(moengage.pushKit)
+
 
     implementation(libs.androidx.core)
     implementation("androidx.appcompat:appcompat:1.6.1")

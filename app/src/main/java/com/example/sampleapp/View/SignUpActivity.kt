@@ -1,7 +1,9 @@
 package com.example.sampleapp.View
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -19,9 +21,42 @@ class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_sign_up)
+
+        val sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+
+
+        //For handling custom notification click
+        MoEPushHelper.getInstance().logNotificationClick(applicationContext, intent)
+
+
+        try {
+            val storedValue = sharedPref.getBoolean("notificationstatus",true)
+
+            if(storedValue)
+            {
+                binding.switchButtonNotify.isChecked = true
+                binding.notificationText.setText("ON")
+
+
+            }
+            else
+            {
+                binding.switchButtonNotify.isChecked = false
+
+                binding.notificationText.setText("OFF")
+
+
+            }
+        }
+        catch (e : Exception)
+        {
+            Log.i("error",e.toString())
+        }
+
 
 
         binding.signupButton.setOnClickListener {
@@ -90,6 +125,31 @@ class SignUpActivity : AppCompatActivity() {
 
         }
 
+
+
+        binding.switchButtonNotify.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked)
+            {
+
+                binding.notificationText.setText("ON")
+
+                val valueToStore = true
+
+                val editor = sharedPref.edit()
+                editor.putBoolean("notificationstatus", valueToStore)
+                editor.apply()
+
+            }
+            else
+            {
+                binding.notificationText.setText("OFF")
+                val valueToStore = false
+                val editor = sharedPref.edit()
+                editor.putBoolean("notificationstatus", valueToStore)
+                editor.apply()
+            }
+
+        }
 
 
 

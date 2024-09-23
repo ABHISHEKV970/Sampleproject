@@ -42,8 +42,9 @@ class LoginActivity : AppCompatActivity() {
 
        // geofence_check()
 
-        //push template [Timer with progressbar]
-        //check_alarm_permission();
+        //push template [Timer with progressbard]
+
+        check_alarm_permission();
 
         binding.loginButton.setOnClickListener {
 
@@ -76,29 +77,28 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-//    private fun check_alarm_permission() {
-//
-//        val androidVersion = Build.VERSION.SDK_INT
-//        if (androidVersion >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-//        {
-//            if (!checkAlarmPermission()) {
-//                requestAlarmPermission()
-//            }
-//        }
-//        else
-//        {
-////            startActivity(Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM))
-//        }
-//
-//    }
+    private fun check_alarm_permission() {
 
-//    private fun checkAlarmPermission(): Boolean {
-//        return ActivityCompat.checkSelfPermission(this, Manifest.permission.SET_ALARM) == PackageManager.PERMISSION_GRANTED
-//    }
-//
-//    private fun requestAlarmPermission() {
-//        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SET_ALARM), ALARM_PERMISSION_REQUEST_CODE)
-//    }
+        val androidVersion = Build.VERSION.SDK_INT
+        if (androidVersion >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+        {
+            if (!checkAlarmPermission()) {
+                requestAlarmPermission()
+            }
+        }
+        else
+        {
+        }
+
+    }
+
+    private fun checkAlarmPermission(): Boolean {
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.SET_ALARM) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestAlarmPermission() {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SET_ALARM), ALARM_PERMISSION_REQUEST_CODE)
+    }
 
     fun getCurrentTimestamp(): String {
         val dateFormat = SimpleDateFormat("dd:MM:yyyy HH:mm:ss")
@@ -234,16 +234,16 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-//        else  if (requestCode == ALARM_PERMISSION_REQUEST_CODE) {
-//            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-//            {
-//                //Called the timer with progressbar alarm
-//                startActivity(Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM))
-//
-//            } else {
-//                println("Permission denied")
-//            }
-//        }
+        else  if (requestCode == ALARM_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                //Called the timer with progressbar alarm
+                startActivity(Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM))
+
+            } else {
+                println("Permission denied")
+            }
+        }
 
 
         else

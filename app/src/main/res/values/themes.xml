@@ -6,4 +6,20 @@
     </style>
 
     <style name="Theme.SampleApp" parent="Base.Theme.SampleApp" />
+
+
+<!--    moengage notification default theme-->
+
+<!--    <style name="MoEInboxTheme.NoActionBar">-->
+<!--        <item name="colorPrimary">@color/white</item>-->
+<!--        <item name="colorPrimaryDark">@color/black</item>-->
+<!--        <item name="colorControlNormal">@color/black</item>-->
+<!--        <item name="android:background">@color/white</item>-->
+<!--    </style>-->
+
+<!--    <style name="MoETheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
+
+<!--    <style name="MoETheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>-->
+
+
 </resources>

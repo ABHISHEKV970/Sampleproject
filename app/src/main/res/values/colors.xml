@@ -3,4 +3,19 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#616559</color>
+    <color name="red">#FF0000</color>
+
+
+<!--    moengage default color codes for notification center-->
+    <!-- Theme customisation -->
+    <color name="moe_inbox_color_accent">#1C64D0</color>
+    <color name="moe_inbox_color_primary_dark">@color/moe_black</color>
+    <color name="moe_inbox_color_primary">@color/moe_white</color>
+    <color name="moe_inbox_control_color">@color/moe_black</color>
+
+<!--    moengage push template timer progress-->
+    <color name="moe_rich_push_progress_bar_background_color">@color/white</color>
+    <color name="moe_rich_push_progress_bar_progress_color">@color/black</color>
+
+
 </resources>

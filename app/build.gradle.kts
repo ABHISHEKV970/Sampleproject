@@ -64,20 +64,46 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.messaging)
+    implementation(libs.androidx.runtime.saved.instance.state)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.kotlinx.coroutines.android)
 
-    //moengage
+    //moengage  core
     implementation(moengage.core)
-//    implementation(moengage.pushKit)
+
+    //implementation(moengage.pushKit)
+    implementation(moengage.pushKit)
+
+    //using push amplification
+    implementation(moengage.pushAmp)
+
+    //location based geofence
+    implementation(moengage.geofence)
+
+    //Notification center customization
+    implementation(moengage.inboxUi)
+
+    //Notification center core
+    implementation(moengage.inboxCore)
+
+
+    //Push Templates - Rich Notification
+    implementation(moengage.richNotification)
+
+
 
 
     implementation(libs.androidx.core)
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.lifecycle:lifecycle-process:2.7.0")
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.lifecycle.process)
+
+    implementation (libs.androidx.fragment.ktx)
+
+
+
 
 
 }

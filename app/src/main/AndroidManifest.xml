@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
-<!--    location permissions-->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- location permissions -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+
 
     <application
         android:name=".View.SampleApplication"
@@ -18,13 +19,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SampleApp"
+        android:theme="@style/Base.Theme.SampleApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".View.CustomInboxActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.FragmentParentActivity"
+            android:exported="false" />
 
         <receiver android:name=".View.CustomActionBroadcastReceiver" />
-
 
         <activity
             android:name=".View.SignUpActivity"
@@ -47,24 +52,37 @@
             </intent-filter>
         </service>
 
+<!--        PushKit service-->
+        <service
+            android:name="com.moengage.hms.pushkit.MoEPushKitMessageService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.huawei.push.action.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".View.WebViewActivity"
             android:exported="false" />
         <activity
             android:name=".View.MainActivity"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="www.moengage.com"
                     android:scheme="https" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="www.moengage.com"
                     android:scheme="http" />

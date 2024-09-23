@@ -34,15 +34,37 @@ class CustomPushMessageListener : PushMessageListener() {
         context: Context,
         notificationPayload: NotificationPayload
     ) {
-        super.customizeNotificationBuilder(notificationBuilder, context, notificationPayload)
 
-        // customise the notification builder
-        notificationBuilder.setSmallIcon(R.drawable.ic_large_headphone)
-        notificationBuilder.setContentTitle("Title has been changed !")
-        notificationBuilder.setContentText("Changed using the custom notification builder.")
-//        notificationBuilder.setContentIntent(pendingIntent) // Sets the PendingIntent to launch the activity when notification is clicked
-        notificationBuilder.setPriority(NotificationCompat.PRIORITY_HIGH)
-        notificationBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE))
+        println(notificationPayload)
+
+
+        var conditioncheck = notificationPayload.payload.getString("company_name")
+
+
+        conditioncheck?.let {
+
+            if(conditioncheck.equals("moengage"))
+            {
+                super.customizeNotificationBuilder(notificationBuilder, context, notificationPayload)
+
+            }
+            else
+            {
+                // customise the notification builder
+                notificationBuilder.setSmallIcon(R.drawable.ic_large_headphone)
+                notificationBuilder.setContentTitle("Title has been changed !")
+                notificationBuilder.setContentText("Changed using the custom notification builder.")
+//          notificationBuilder.setContentIntent(pendingIntent) // Sets the PendingIntent to launch the activity when notification is clicked
+                notificationBuilder.setPriority(NotificationCompat.PRIORITY_HIGH)
+                notificationBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE))
+            }
+        }
+
+
+
+
+
+
 
 
     }
@@ -68,13 +90,13 @@ class CustomPushMessageListener : PushMessageListener() {
 
         //TASK 3 BASED ON THE KV PAIR CONDITION REDIRECT THE CLICKS
 
-        val conditioncheck = payload.getString("gcm_title")
+        val conditioncheck = payload.getString("company_name")
 
         conditioncheck?.let {
 
             var intent = Intent()
 
-            if (conditioncheck.equals("test")) {
+            if (conditioncheck.equals("moengage")) {
                 intent = Intent(activity, MainActivity::class.java)
             } else {
                 intent = Intent(activity, SignUpActivity::class.java)

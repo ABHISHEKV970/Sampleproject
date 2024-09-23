@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SampleApp</string>
+
+
+    <!--    Notification customize-->
+    <string name="moe_inbox_notification_title">Recent Notifications</string>
+
 </resources>

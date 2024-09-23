@@ -36,7 +36,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
                 if (storedValue) {
                     //TASK 1 USING THE BASIC KV PAIR CONDITION CHECKING
-                    val conditionMet = remoteMessage.data["company_name"] == "moengage"
+                    val conditionMet = remoteMessage.data["push_type"] == "moengage"
 
                     if (conditionMet) {
                         //MOENGAGE SDK TRIGGER NOTIFICATION
@@ -57,7 +57,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
                             //TASK 3 BASED ON THE KV PAIR CONDITION REDIRECT THE CLICKS
 
-                            val conditionclick = remoteMessage.data["gcm_title"] == "testapp"
+                            val conditionclick = remoteMessage.data["department_name"] == "solutions"
 
                             var intent = Intent()
 
@@ -75,7 +75,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                                 bundle.putString(key, value)
                             }
 
-                            bundle.putString("company", "moengage")
+                            bundle.putString("pod_name", "no4")
 
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                             intent.putExtra("payload", bundle)

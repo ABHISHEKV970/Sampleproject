@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    tools:context=".View.CustomInboxActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_height="60dp">
+
+
+        <ImageButton
+            android:id="@+id/backbtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_back"
+            android:background="@color/moe_inbox_transparent_color"/>
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="22dp"
+            android:singleLine="true"
+            android:layout_weight="3"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="Recent Notifications"/>
+
+
+
+
+    </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/delete_all_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete All"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:drawableEnd="@drawable/ic_delete"
+            android:layout_alignParentEnd="true"
+            android:textSize="18sp"
+            android:layout_below="@+id/header_layout"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notify_rv"
+        android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:visibility="visible"
+        android:layout_below="@+id/delete_all_tv"
+        tools:listitem="@layout/item_custom_notification"
+        android:layout_height="match_parent"/>
+
+
+        <TextView
+            android:id="@+id/nodata"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Notifications Found  !"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:textSize="22sp"
+            android:textAlignment="center"/>
+
+
+
+    </RelativeLayout>
+
+
+
+
+</layout>

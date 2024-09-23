@@ -1,26 +1,29 @@
 package com.example.sampleapp.View
 
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sampleapp.Models.Article
 import com.example.sampleapp.Network.FetchData
 import com.example.sampleapp.R
 import com.example.sampleapp.databinding.ActivityMainBinding
-import com.moengage.core.MoECoreHelper
 import com.moengage.core.Properties
 import com.moengage.core.analytics.MoEAnalyticsHelper
 import com.moengage.core.model.AppStatus
 import com.moengage.core.model.GeoLocation
+import com.moengage.inbox.core.MoEInboxHelper
+import com.moengage.inbox.ui.MoEInboxUiHelper
+import com.moengage.inbox.ui.view.InboxActivity
+import com.moengage.inbox.ui.view.InboxFragment
 import com.moengage.pushbase.MoEPushHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -49,7 +52,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
 
-        setSupportActionBar(binding.appBar)
 
         formattedDate = format.format(currentDate)
 
@@ -69,9 +71,6 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 }
-
-
-
 
         binding.newsRv.layoutManager = LinearLayoutManager(this)
         adapter = NewsAdapter()
@@ -104,6 +103,13 @@ class MainActivity : AppCompatActivity() {
             Log.i("error", e.toString())
         }
 
+        val  unclickedCount = MoEInboxHelper.getInstance().getUnClickedMessagesCount(applicationContext)
+        unclickedCount?.let {
+            Log.i("counthere",unclickedCount.count.toString())
+            binding.countBadge.text = unclickedCount.count.toString()
+        }
+
+
         binding.event1.setOnClickListener {
 
             event_track()
@@ -112,6 +118,29 @@ class MainActivity : AppCompatActivity() {
         binding.event2.setOnClickListener {
             event2_track()
         }
+
+
+
+        binding.bellicon.setOnClickListener{
+
+            //Custom Adapter Call
+//            MoEInboxUiHelper.getInstance().setInboxAdapter(CustomInboxAdapter())
+
+            //Activity call
+//            val intent = Intent(this, InboxActivity::class.java)
+//            startActivity(intent)
+
+            //Fragment call
+//            val intent = Intent(this, FragmentParentActivity::class.java)
+//            startActivity(intent)
+
+            //created activity with recyclerview
+            val intent = Intent(this, CustomInboxActivity::class.java)
+            startActivity(intent)
+
+        }
+
+
 
 
     }
@@ -210,37 +239,54 @@ class MainActivity : AppCompatActivity() {
         super.onRestart()
         if (checkForInternet(this)) {
             api_call()
+            val  unclickedCount = MoEInboxHelper.getInstance().getUnClickedMessagesCount(applicationContext)
+            unclickedCount?.let {
+                Log.i("counthere",unclickedCount.count.toString())
+                binding.countBadge.text = unclickedCount.count.toString()
+            }
         } else {
             Toast.makeText(this, "No Internet Connection Found !", Toast.LENGTH_SHORT).show()
         }
+
+
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_item -> {
-
-                true
-            }
-            R.id.logout_item -> {
-
-                MoECoreHelper.logoutUser(this)
-
-                finish()
-
-                true
-            }
-            R.id.settings_item -> {
-
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.menu_main, menu)
+//        return super.onCreateOptionsMenu(menu)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when (item.itemId) {
+//            R.id.notificatio_item -> {
+//
+//                //Activity call
+//                val intent = Intent(this, InboxActivity::class.java)
+//                startActivity(intent)
+//
+//                //Fragment call
+////                supportFragmentManager.commit {
+////                    setReorderingAllowed(true)
+////                    add<InboxFragment>(R.id.fragment_container_view)
+////                }
+//
+//                true
+//            }
+//            R.id.logout_item -> {
+//
+//                MoECoreHelper.logoutUser(this)
+//
+//                finish()
+//
+//                true
+//            }
+//            R.id.settings_item -> {
+//
+//                true
+//            }
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
 
 }

@@ -33,13 +33,10 @@ class SampleApplication : Application() {
     override fun onCreate() {
 
         super.onCreate()
-
         //Firebase initialization
         FirebaseApp.initializeApp(this)
-
         //fetch FCM Token
         FetchFcm_Token()
-
 
         //OptOut the activity
         val trackingOptOut = mutableSetOf<Class<*>>()
@@ -53,7 +50,12 @@ class SampleApplication : Application() {
 
         val moEngage = MoEngage.Builder(this, "N479J9GSMH8OE6E4IPE5G7NV", DataCenter.DATA_CENTER_1)
             .configureFcm(FcmConfig(true))
-            .configureNotificationMetaData(NotificationConfig(R.drawable.ic_notify_small, R.drawable.ic_large_headphone))
+            .configureNotificationMetaData(
+                NotificationConfig(
+                    R.drawable.ic_notify_small,
+                    R.drawable.ic_large_headphone
+                )
+            )
             .configureLogs(LogConfig(LogLevel.VERBOSE, true))
             .configureTrackingOptOut(trackingOptOutConfig)
 
@@ -68,7 +70,7 @@ class SampleApplication : Application() {
         MoEFireBaseHelper.getInstance().addTokenListener(object : TokenAvailableListener {
             override fun onTokenAvailable(token: Token) {
 
-                Log.i("token",token.toString())
+                Log.i("token", token.toString())
                 //will receive the token
             }
 
@@ -82,12 +84,12 @@ class SampleApplication : Application() {
         MoEPushHelper.getInstance().requestPushPermission(this)
 
 
-        geo_fence_enable()
-
+        //Geo Fence Permission Enabling
+         geo_fence_enable()
 
 
         //Call back for fetching the token from HMS Push Kit Server
-        MoEPushKitHelper.getInstance().addTokenListener(object :TokenAvailableListener {
+        MoEPushKitHelper.getInstance().addTokenListener(object : TokenAvailableListener {
             override fun onTokenAvailable(token: Token) {
 
 
@@ -97,10 +99,7 @@ class SampleApplication : Application() {
 
     private fun geo_fence_enable() {
 
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
         ) {
             // Fine Location permission is granted
             // Check if current android version >= 10, if >= 10 check for Background Location permission
@@ -113,6 +112,9 @@ class SampleApplication : Application() {
                     println("permission granted")
                     //Configure Geofence
                     MoEGeofenceHelper.getInstance().startGeofenceMonitoring(this)
+                    val geofenceHitListener = MyGeofenceHitListener()
+                    MoEGeofenceHelper.getInstance().addListener(geofenceHitListener)
+
                 } else {
                     println("pemission not enabled")
                 }
@@ -132,19 +134,12 @@ class SampleApplication : Application() {
             }
             // Get new FCM registration token
             val token = task.result
-
             Log.i("tokenvalue", token)
-
             //Token registration using the Normal Push
             MoEFireBaseHelper.getInstance().passPushToken(applicationContext, token)
-
-
-//            //Token registration using PUSH Kit
-            MoEPushKitHelper.getInstance().passPushToken(applicationContext,token)
-
+            //Token registration using PUSH Kit
+            MoEPushKitHelper.getInstance().passPushToken(applicationContext, token)
         })
     }
-
-
 
 }

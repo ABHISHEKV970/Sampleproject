@@ -83,6 +83,10 @@ dependencies {
     //location based geofence
     implementation(moengage.geofence)
 
+    //google location services
+    implementation (libs.play.services.location)
+
+
     //Notification center customization
     implementation(moengage.inboxUi)
 
@@ -101,6 +105,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.process)
 
     implementation (libs.androidx.fragment.ktx)
+
 
 
 

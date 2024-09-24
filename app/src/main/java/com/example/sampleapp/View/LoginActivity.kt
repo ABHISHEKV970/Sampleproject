@@ -29,8 +29,6 @@ class LoginActivity : AppCompatActivity() {
     private val helper = Helper()
 
     private val ALARM_PERMISSION_REQUEST_CODE = 100
-
-
     private val LOCATION_PERMISSION_REQUEST_CODE = 1
 
 
@@ -39,11 +37,10 @@ class LoginActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
-
-       // geofence_check()
+        //Grant geofence permission
+        geofence_check()
 
         //push template [Timer with progressbard]
-
         check_alarm_permission();
 
         binding.loginButton.setOnClickListener {
@@ -80,24 +77,28 @@ class LoginActivity : AppCompatActivity() {
     private fun check_alarm_permission() {
 
         val androidVersion = Build.VERSION.SDK_INT
-        if (androidVersion >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-        {
+        if (androidVersion >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             if (!checkAlarmPermission()) {
                 requestAlarmPermission()
             }
-        }
-        else
-        {
+        } else {
         }
 
     }
 
     private fun checkAlarmPermission(): Boolean {
-        return ActivityCompat.checkSelfPermission(this, Manifest.permission.SET_ALARM) == PackageManager.PERMISSION_GRANTED
+        return ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.SET_ALARM
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun requestAlarmPermission() {
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SET_ALARM), ALARM_PERMISSION_REQUEST_CODE)
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.SET_ALARM),
+            ALARM_PERMISSION_REQUEST_CODE
+        )
     }
 
     fun getCurrentTimestamp(): String {
@@ -121,7 +122,7 @@ class LoginActivity : AppCompatActivity() {
                         Manifest.permission.ACCESS_BACKGROUND_LOCATION
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
-                    println("permission granted")
+                    println("Granted Permission !")
 
                 } else {
                     // Ask for Background Location Permission
@@ -152,7 +153,7 @@ class LoginActivity : AppCompatActivity() {
                     )
                 })
                 .setNegativeButton("CANCEL", DialogInterface.OnClickListener { dialog, which ->
-                    // Permission is denied by the user
+                    println("Denied Permission !")
                 })
                 .create().show()
         } else {
@@ -183,7 +184,7 @@ class LoginActivity : AppCompatActivity() {
                 .setNegativeButton(
                     "CANCEL"
                 ) { dialog, which ->
-                    // User declined for Background Location Permission.
+                    println("Denied Permission !")
                 }
                 .create().show()
         } else {
@@ -198,8 +199,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
-        grantResults: IntArray)
-    {
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
 
@@ -211,19 +212,20 @@ class LoginActivity : AppCompatActivity() {
                             Manifest.permission.ACCESS_BACKGROUND_LOCATION
                         ) == PackageManager.PERMISSION_GRANTED
                     ) {
-                        // Background Location Permission is granted so do your work here
+                        //Background Location Permission is granted so do your work here
                         println("permission granted")
 
                     } else {
                         // Ask for Background Location Permission
                         askPermissionForBackgroundUsage();
                     }
+                } else {
+
                 }
             } else {
                 // User denied location permission
             }
-        }
-        else if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+        } else if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // User granted for Background Location Permission.
                 println("permission granted")
@@ -232,25 +234,18 @@ class LoginActivity : AppCompatActivity() {
                 println("permission declined")
 
             }
-        }
-
-        else  if (requestCode == ALARM_PERMISSION_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            {
+        } else if (requestCode == ALARM_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //Called the timer with progressbar alarm
                 startActivity(Intent(ACTION_REQUEST_SCHEDULE_EXACT_ALARM))
 
             } else {
                 println("Permission denied")
             }
-        }
-
-
-        else
-        {
+        } else {
             //add some logics at here
+        }
     }
-}
 
 
 }

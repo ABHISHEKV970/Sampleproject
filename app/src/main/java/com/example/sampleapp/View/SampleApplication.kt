@@ -55,11 +55,12 @@ class SampleApplication : Application() {
                     R.drawable.ic_notify_small,
                     R.drawable.ic_large_headphone
                 )
-            )
+             )
             .configureLogs(LogConfig(LogLevel.VERBOSE, true))
             .configureTrackingOptOut(trackingOptOutConfig)
 
-            //push kit enabling for huwaei
+
+            //push kit enabling for Huwaei devices (HMS Push Kit)
             .configurePushKit(PushKitConfig(true))
             .build()
 
@@ -137,6 +138,8 @@ class SampleApplication : Application() {
             Log.i("tokenvalue", token)
             //Token registration using the Normal Push
             MoEFireBaseHelper.getInstance().passPushToken(applicationContext, token)
+
+
             //Token registration using PUSH Kit
             MoEPushKitHelper.getInstance().passPushToken(applicationContext, token)
         })

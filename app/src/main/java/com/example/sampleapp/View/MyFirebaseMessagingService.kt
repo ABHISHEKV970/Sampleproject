@@ -39,10 +39,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     val conditionMet = remoteMessage.data["push_type"] == "moengage"
 
                     if (conditionMet) {
+
+                        print("pushamp trigger")
                         //MOENGAGE SDK TRIGGER NOTIFICATION
-                        MoEFireBaseHelper.getInstance()
-                            .passPushPayload(applicationContext, remoteMessage.data)
-                    } else {
+                       // MoEFireBaseHelper.getInstance().passPushPayload(applicationContext, remoteMessage.data)
+
+                    }
+                    else {
                         //APP TRIGGER NOTIFICATION
                         if (MoEPushHelper.getInstance()
                                 .isFromMoEngagePlatform(remoteMessage.data)

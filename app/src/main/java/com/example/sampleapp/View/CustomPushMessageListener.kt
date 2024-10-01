@@ -2,16 +2,25 @@ package com.example.sampleapp.View
 
 import android.app.Activity
 import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
+import android.media.AudioAttributes
 import android.media.RingtoneManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat.getSystemService
 import com.example.sampleapp.R
+import com.moengage.core.internal.utils.getApplicationContext
 import com.moengage.pushbase.model.NotificationPayload
 import com.moengage.pushbase.push.PushMessageListener
+import kotlin.random.Random
 
 class CustomPushMessageListener : PushMessageListener() {
 
@@ -38,33 +47,24 @@ class CustomPushMessageListener : PushMessageListener() {
         println(notificationPayload)
 
 
-        var conditioncheck = notificationPayload.payload.getString("company_name")
-
+        var conditioncheck = notificationPayload.payload.getString("push_type")
 
         conditioncheck?.let {
 
-            if(conditioncheck.equals("moengage"))
-            {
-                super.customizeNotificationBuilder(notificationBuilder, context, notificationPayload)
+            if (conditioncheck.equals("moengage")) {
 
-            }
-            else
-            {
-                // customise the notification builder
-                notificationBuilder.setSmallIcon(R.drawable.ic_large_headphone)
-                notificationBuilder.setContentTitle("Title has been changed !")
-                notificationBuilder.setContentText("Changed using the custom notification builder.")
-//          notificationBuilder.setContentIntent(pendingIntent) // Sets the PendingIntent to launch the activity when notification is clicked
-                notificationBuilder.setPriority(NotificationCompat.PRIORITY_HIGH)
-                notificationBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE))
+
+                super.customizeNotificationBuilder(
+                    notificationBuilder,
+                    context,
+                    notificationPayload
+                )
+
+
+            } else {
+
             }
         }
-
-
-
-
-
-
 
 
     }
@@ -128,7 +128,7 @@ class CustomPushMessageListener : PushMessageListener() {
         super.handleCustomAction(context, payload)
 
         // TASK - 4 Implement CUSTOM ACTION Button Redirection
-        
+
         println(payload)
 
         val conditionclick = payload == "test"

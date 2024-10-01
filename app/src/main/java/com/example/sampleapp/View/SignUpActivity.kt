@@ -22,6 +22,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_sign_up)
@@ -35,23 +36,18 @@ class SignUpActivity : AppCompatActivity() {
 
         try {
             //TASK 2 USING SHARED PREFERENCE
-
             val storedValue = sharedPref.getBoolean("notificationstatus",true)
+
 
             if(storedValue)
             {
                 binding.switchButtonNotify.isChecked = true
                 binding.notificationText.setText("ON")
-
-
             }
             else
             {
                 binding.switchButtonNotify.isChecked = false
-
                 binding.notificationText.setText("OFF")
-
-
             }
         }
         catch (e : Exception)

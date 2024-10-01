@@ -1,6 +1,7 @@
 package com.example.sampleapp.View
 
 import android.Manifest
+import android.app.Activity
 import android.app.Application
 import android.content.pm.PackageManager
 import android.os.Build
@@ -19,6 +20,8 @@ import com.moengage.core.config.LogConfig
 import com.moengage.core.config.NotificationConfig
 import com.moengage.core.config.PushKitConfig
 import com.moengage.core.config.TrackingOptOutConfig
+import com.moengage.core.disableAndroidIdTracking
+import com.moengage.core.disableDataTracking
 import com.moengage.firebase.MoEFireBaseHelper
 import com.moengage.geofence.MoEGeofenceHelper
 import com.moengage.hms.pushkit.MoEPushKitHelper
@@ -53,21 +56,24 @@ class SampleApplication : Application() {
             .configureNotificationMetaData(
                 NotificationConfig(
                     R.drawable.ic_notify_small,
-                    R.drawable.ic_large_headphone
+                    R.drawable.ic_large_headphone,
+                    R.color.moe_inbox_color_accent,
+                    true
                 )
-             )
+            )
             .configureLogs(LogConfig(LogLevel.VERBOSE, true))
+
+            //TO OPT OUT ACTIVITIES
             .configureTrackingOptOut(trackingOptOutConfig)
 
-
-            //push kit enabling for Huwaei devices (HMS Push Kit)
+            //Push kit enabling for Huwaei devices (HMS Push Kit)
             .configurePushKit(PushKitConfig(true))
             .build()
 
         MoEngage.initialiseDefaultInstance(moEngage)
 
 
-        //call back for fetching the token from moengage sdk
+        //Call back for fetching the token from moengage sdk
         MoEFireBaseHelper.getInstance().addTokenListener(object : TokenAvailableListener {
             override fun onTokenAvailable(token: Token) {
 
@@ -77,16 +83,14 @@ class SampleApplication : Application() {
 
         })
 
-        //custom push messages
-        MoEPushHelper.getInstance().registerMessageListener(CustomPushMessageListener())
+        //Custom push messages
+//        MoEPushHelper.getInstance().registerMessageListener(CustomPushMessageListener())
 
 
-        //Requesting permission on android version 13 and above devices
-        MoEPushHelper.getInstance().requestPushPermission(this)
 
 
         //Geo Fence Permission Enabling
-         geo_fence_enable()
+        geo_fence_enable()
 
 
         //Call back for fetching the token from HMS Push Kit Server
@@ -100,7 +104,10 @@ class SampleApplication : Application() {
 
     private fun geo_fence_enable() {
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
         ) {
             // Fine Location permission is granted
             // Check if current android version >= 10, if >= 10 check for Background Location permission
@@ -144,5 +151,9 @@ class SampleApplication : Application() {
             MoEPushKitHelper.getInstance().passPushToken(applicationContext, token)
         })
     }
+
+
+
+
 
 }

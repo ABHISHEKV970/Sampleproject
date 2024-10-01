@@ -82,7 +82,6 @@ class MainActivity : AppCompatActivity() {
                     MoEAnalyticsHelper.setAppStatus(this, AppStatus.INSTALL)
                 } else {
                     MoEAnalyticsHelper.setAppStatus(this, AppStatus.UPDATE)
-
                 }
 
                 api_call()
